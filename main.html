@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">job portal</a>
+        <ul id="nav-mobile" class="right">
+          <li><a class="modal-trigger" href="#modal2">login</a></li>
+          <li><a class="modal-trigger" href="#modal1">signup</a></li>
+          <li><a onclick="logout()">logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- signup Modal Structure -->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4>Signup</h4>
+        <form onsubmit="signup(event)">
+          <input type="email" id="signupEmail" placeholder="email" />
+          <input type="password" id="signupPassword" placeholder="password" />
+          <button class="btn waves-effect" type="submit">submit</button>
+        </form>
+        <br>
+        <button onclick=loginWithGoogle() class="btn waves-effect">Log in With Google</button>
+        
+      </div>
+    </div>
+
+    <!-- login Modal Structure -->
+    <div id="modal2" class="modal">
+      <div class="modal-content">
+        <h4>Login</h4>
+        <form onsubmit="login(event)">
+          <input type="email" id="loginEmail" placeholder="email" />
+          <input type="password" id="loginPassword" placeholder="password" />
+          <button class="btn waves-effect" type="submit">submit</button>
+        </form>
+        <button onclick="loginWithGoogle()" class="btn waves-effect">Log in With Google</button>
+
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+      });
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCN1mzTFh0URTH2Qcu8N8AOGSb2mbm358s",
+        authDomain: "fir-34c5e.firebaseapp.com",
+        projectId: "fir-34c5e",
+        storageBucket: "fir-34c5e.appspot.com",
+        messagingSenderId: "141961844472",
+        appId: "1:141961844472:web:e344e9b54a16cdf34ccd0d"
+      };
+      
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="./Scipt/auth.js"></script>
+  </body>
+</html>
