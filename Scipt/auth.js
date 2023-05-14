@@ -18,3 +18,20 @@ async function signup(e) {
 }
 
 
+async function login(e) {
+    e.preventDefault();
+    const email = document.querySelector("#loginEmail").value;
+    const password = document.querySelector("#loginPassword").value;
+    try {
+        const result = await firebase.auth().signInWithEmailAndPassword(email, password)
+        console.log(result);
+        M.toast({ html: `welcome ${result.user.email}`, classes: "red" })
+    } catch (error) {
+
+        M.toast({ html: error.message, classes: "red" })
+    }
+    email.value = "";
+    password.value = "";
+    M.Modal.getInstance(myModel[1]).close()
+}
+
