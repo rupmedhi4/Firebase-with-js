@@ -6,6 +6,14 @@ async function signup(e) {
     const password = document.querySelector("#signupPassword").value;
     try {
         const result = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+       await result.user.updateProfile({
+            displayName: "User"
+          })
+        
+       await firebase.auth().currentUser.sendEmailVerification()
+         
+
         console.log(result);
         M.toast({ html: `welcome ${result.user.email}`, classes: "red" })
     } catch (error) {
