@@ -72,6 +72,4 @@ async function loginWithGoogle(){
     }
   }
 
-function uploadImage(e){
-    console.log(e.target.files)
-}
+ 

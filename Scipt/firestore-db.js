@@ -42,12 +42,14 @@ async function getuserInfoRealtime(userId) {
                 const userInfo = doc.data()
                 if (userInfo) {
                     userDetails.innerHTML = `
-                       <h3> ${userInfo.name}</h3>
-                       <h3> ${userInfo.email}</h3>
-                       <h3> ${userInfo.phone}</h3>
-                       <h3> ${userInfo.speciality}</h3>
-                       <h3> ${userInfo.portfolioUrl}</h3>
-                       <h3> ${userInfo.experience}</h3>
+                    <ul class="collection">
+                             <li class="collection-item">  <h3> ${userInfo.name}</h3></li>
+                             <li class="collection-item">Email -${userInfo.email}</li>
+                             <li class="collection-item">Mobile No - ${userInfo.phone}</li>
+                             <li class="collection-item">Spaciality - ${userInfo.speciality}</li>
+                             <li class="collection-item">Portfolio url - ${userInfo.portfolioUrl}</li>
+                             <li class="collection-item">experience - ${userInfo.experience}</li>
+                     </ul>
                        <button class="btn waves-effect modal-trigger" href="#modal3">edit</button>
                         `;
                       editProfile["name"].value = userInfo.name
@@ -56,6 +58,12 @@ async function getuserInfoRealtime(userId) {
                     editProfile["specility"].value= userInfo.speciality
                     editProfile["portfolioUrl"].value= userInfo.portfolioUrl
                     editProfile["experience"].value= userInfo.experience
+
+
+                    if(firebase.auth().currentUser.photoURL){
+                        document.querySelector("#proImg").src = firebase.auth().currentUser.photoURL
+                    }
+                   
                 }
             }
         })
@@ -79,4 +87,36 @@ function updateUserProfile(e){
         
   })
   M.Modal.getInstance(myModel[2]).close();
+}
+
+
+function uploadImage(e){
+    console.log(e.target.files)
+    const uid = firebase.auth().currentUser.uid
+
+   const fileRef =  firebase.storage().ref().child(`/users/${uid}/profile`)
+  const uploadTask =  fileRef.put(e.target.files[0])
+
+  uploadTask.on('state_changed', 
+  (snapshot) => {
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    if(progress==`100`) {
+        alert("upload")
+    }
+    console.log('Upload is ' + progress + '% done');
+    
+  }, 
+  (error) => {
+    console.log(error)
+  }, 
+  () => {
+    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+      console.log('File available at', downloadURL);
+      firebase.auth().currentUser.updateProfile({
+        photoURL : downloadURL
+      })
+    });
+  }
+);
+
 }
