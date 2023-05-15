@@ -50,9 +50,10 @@ function logout() {
 const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         console.log(user)
-        getuserInfo(user.uid)
+        //getuserInfo(user.uid)
+        getuserInfoRealtime(user.uid)
     } else {
-        getuserInfo(null)
+        getuserInfoRealtime(null)
         console.log("signout")
         M.toast({ html: "signout success", classes: "red" })
     }
