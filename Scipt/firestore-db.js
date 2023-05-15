@@ -1,4 +1,5 @@
 const userDetails = document.querySelector(".userDetails")
+const editProfile = document.querySelector("#editProfile")
 
 function createUserCollection(user) {
     firebase.firestore().collection("users").doc(user.uid).set({
@@ -7,7 +8,8 @@ function createUserCollection(user) {
         email: user.email,
         phone: "",
         speciality: "",
-        portfolioUrl: ""
+        portfolioUrl: "",
+        experience : ""
     })
 }
 
@@ -43,7 +45,17 @@ async function getuserInfoRealtime(userId) {
                        <h3> ${userInfo.name}</h3>
                        <h3> ${userInfo.email}</h3>
                        <h3> ${userInfo.phone}</h3>
-                        `
+                       <h3> ${userInfo.speciality}</h3>
+                       <h3> ${userInfo.portfolioUrl}</h3>
+                       <h3> ${userInfo.experience}</h3>
+                       <button class="btn waves-effect modal-trigger" href="#modal3">edit</button>
+                        `;
+                      editProfile["name"].value = userInfo.name
+                    editProfile["profileEmail"].value= userInfo.email
+                    editProfile["phoneno"].value= userInfo.phone
+                    editProfile["specility"].value= userInfo.speciality
+                    editProfile["portfolioUrl"].value= userInfo.portfolioUrl
+                    editProfile["experience"].value= userInfo.experience
                 }
             }
         })
@@ -53,3 +65,18 @@ async function getuserInfoRealtime(userId) {
     }
 }
 
+function updateUserProfile(e){
+    e.preventDefault();
+  const userDocRef = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid)
+
+  userDocRef.update({
+        name: editProfile["name"].value,
+        email:editProfile["profileEmail"].value,
+        phone:editProfile["phoneno"].value,
+        speciality: editProfile["specility"].value,
+        portfolioUrl:editProfile["portfolioUrl"].value,
+        experience : editProfile["experience"].value
+        
+  })
+  M.Modal.getInstance(myModel[2]).close();
+}
