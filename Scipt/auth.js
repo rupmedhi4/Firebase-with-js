@@ -10,8 +10,8 @@ async function signup(e) {
        await result.user.updateProfile({
             displayName: "User"
           })
-        
-       await firebase.auth().currentUser.sendEmailVerification()
+       createUserCollection(result.user) 
+      // await firebase.auth().currentUser.sendEmailVerification()
          
 
         console.log(result);
@@ -50,7 +50,9 @@ function logout() {
 const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         console.log(user)
+        getuserInfo(user.uid)
     } else {
+        getuserInfo(null)
         console.log("signout")
         M.toast({ html: "signout success", classes: "red" })
     }
