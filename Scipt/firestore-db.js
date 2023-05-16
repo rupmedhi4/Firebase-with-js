@@ -120,3 +120,24 @@ function uploadImage(e){
 );
 
 }
+
+
+async function allUserDetails(){
+    document.getElementById("table").style.display="table"
+    const userRef = await firebase.firestore().collection("users").get()
+
+        userRef.docs.forEach(doc=>{
+            const info = doc.data()
+            //console.log(info)
+            document.getElementById("tbody").innerHTML +=`<tr>
+            <td>${info.name}</td>
+            <td>${info.email}</td>
+            <td>${info.phone}</td>
+           
+            <td>${info.speciality}</td>
+            <td>${info.experience}</td>
+            <td>${info.portfolioUrl}</td>
+          </tr>`
+        })
+   
+} 
